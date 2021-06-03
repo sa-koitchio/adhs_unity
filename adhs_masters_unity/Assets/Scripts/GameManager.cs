@@ -53,14 +53,22 @@ public class GameManager : MonoBehaviour
                 currentMultiplier++;
             }
         }
-
+        // Add score
         currentScore += scorePerNote * currentMultiplier;
         scoreText.text = "Score: " + currentScore;
+
+        // Show Multiplier
+        multiplierText.text = "Multiplier: x" + currentMultiplier;
     }
 
     public void noteMissed()
     {
         Debug.Log("Miss.");
+        // Loose multiplier
+        currentMultiplier = 1;
+        multiplierTracker = 0;
+        multiplierText.text = "Multiplier: x" + currentMultiplier;
+        //owo
     }
 
 }
