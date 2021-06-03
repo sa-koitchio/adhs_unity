@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public AudioSource theMusic;
     public bool startPlaying;
     public BeatScroller bs;
     public static GameManager instance;
+    public int currentScore;
+    public int scorePerNote = 100;
+    public Text scoreText;
+    public Text multiplierText;
+    public int currentMultiplier;
+    public int multiplierTracker;
+    public int[] multiplierThresholds;
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
+        currentScore = 0;
+        scoreText.text = "Score: " + currentScore;
+        currentMultiplier = 1;
     }
 
     // Update is called once per frame
@@ -32,6 +42,20 @@ public class GameManager : MonoBehaviour
     public void noteHit()
     {
         Debug.Log("Great.");
+        if (currentMultiplier - 1 < multiplierThresholds.Length)
+        {
+            // Increase Multiplier tracker for thresholds
+            multiplierTracker++;
+
+            if (multiplierThresholds[currentMultiplier - 1] <= multiplierTracker)
+            {
+                multiplierTracker = 0;
+                currentMultiplier++;
+            }
+        }
+
+        currentScore += scorePerNote * currentMultiplier;
+        scoreText.text = "Score: " + currentScore;
     }
 
     public void noteMissed()
