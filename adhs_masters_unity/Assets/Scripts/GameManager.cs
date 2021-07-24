@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public int currentScore;
     public int scorePerNote = 100;
+    public int scorePerGoodNote = 125;
+    public int scorePerPerfectNode = 150;
+
     public Text scoreText;
     public Text multiplierText;
     public int currentMultiplier;
@@ -54,11 +57,29 @@ public class GameManager : MonoBehaviour
             }
         }
         // Add score
-        currentScore += scorePerNote * currentMultiplier;
+        //currentScore += scorePerNote * currentMultiplier;
         scoreText.text = "Score: " + currentScore;
 
         // Show Multiplier
         multiplierText.text = "Multiplier: x" + currentMultiplier;
+    }
+
+    public void normalHit()
+    {
+        currentScore += scorePerNote * currentMultiplier;
+        noteHit();
+    }
+
+    public void goodHit()
+    {
+        currentScore += scorePerGoodNote * currentMultiplier;
+        noteHit();
+    }
+
+    public void perfectHit()
+    {
+        currentScore += scorePerPerfectNode * currentMultiplier;
+        noteHit();
     }
 
     public void noteMissed()
